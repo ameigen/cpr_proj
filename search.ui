@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>200</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>401</width>
-     <height>301</height>
+     <width>200</width>
+     <height>201</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -31,8 +31,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
+      <x>20</x>
+      <y>20</y>
       <width>321</width>
       <height>41</height>
      </rect>
@@ -44,7 +44,7 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>90</x>
       <y>80</y>
       <width>71</width>
       <height>21</height>
@@ -54,7 +54,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>80</y>
       <width>47</width>
       <height>13</height>
@@ -67,7 +67,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>110</y>
       <width>51</width>
       <height>16</height>
@@ -80,7 +80,7 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>90</x>
       <y>110</y>
       <width>72</width>
       <height>22</height>
@@ -93,7 +93,7 @@
    <widget class="QComboBox" name="comboBox_2">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>90</x>
       <y>140</y>
       <width>72</width>
       <height>22</height>
@@ -103,7 +103,7 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>140</y>
       <width>47</width>
       <height>13</height>
@@ -116,7 +116,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>50</x>
       <y>170</y>
       <width>71</width>
       <height>21</height>
@@ -124,16 +124,6 @@
     </property>
     <property name="text">
      <string>Search</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>145</x>
-      <y>51</y>
-      <width>251</width>
-      <height>241</height>
-     </rect>
     </property>
    </widget>
   </widget>

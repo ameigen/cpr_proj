@@ -1,3 +1,9 @@
+/*
+ * Search Class authored by Javier R.
+ * + search.h
+ * + search.cpp
+ * + search.ui
+ */
 #ifndef SEARCH_H
 #define SEARCH_H
 
@@ -15,12 +21,10 @@ public:
     explicit search(QWidget *parent = nullptr);
     ~search();
     QString platform;
-    QString graphics;
-    int price;
+    QString graphics;  
     QString getPlatform();
     QString getGraphics();
     QString getPrice();
-    int getBudget();
 
 private slots:
 

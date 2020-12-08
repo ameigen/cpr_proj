@@ -20,30 +20,28 @@ Dialog::~Dialog()
     delete ui;
 }
 
-//Updates query string if Gaming button is selected
+//FUnction that returns the current query based off sleection
+QString Dialog::getCategory(){
+    return category;
+}
+
+//Action done when "gaming" button clicked
 void Dialog::on_gaming_clicked()
 {
     category = "gaming";
     close();
 }
 
-//Updates query string if Productivity button is selected
+//Action done when "productivity" button clicked
 void Dialog::on_productivity_clicked()
 {
     category = "productivity";
     close();
 }
 
-//Updates query string if Both button is selected
+//Action done when "balance" button clicked
 void Dialog::on_both_clicked()
 {
     category = "balance";
     close();
 }
-
-//FUnction that returns the current query based off sleection
-QString Dialog::getQuery(){
-    return category;
-}
-
-
