@@ -11,8 +11,10 @@ search::search(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Prefereneces");
     ui->lineEdit->setValidator(new QIntValidator(this));
+    ui->comboBox->addItem("");
     ui->comboBox->addItem("AMD");
     ui->comboBox->addItem("Intel");
+    ui->comboBox_2->addItem("");
     ui->comboBox_2->addItem("AMD");
     ui->comboBox_2->addItem("Nvidia");
 }

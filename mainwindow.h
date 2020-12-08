@@ -28,16 +28,18 @@ public:
     void templateSearch();
     void ConnectDatabase();
     void testRead();
-    QString platform;
-    QString graphics;
-    QString budget;
-    QString category;
-    QString complete;
-    QString getCategory();
-    QString getPlatform();
-    QString getGrapgics();
-    QString getBudget();
-    QString getAll();
+    QString platform, graphics, budget, category, complete;
+    QString manufacturerCPU, modelCPU, priceCPU, segmentCPU, socketCPU, graphicsCPU, chipsetCPU, coolerCPU, pcieCPU, memMaxCPU;
+    QString manufacturerMB, modelMB, priceMB, formMB, chipsetMB, ramMaxSpeedMB, ramMaxCapacityMB, socketMB, m2MB;
+    QString manufacturerRAM, modelRAM, typeRAM, sizeRAM, priceRAM, speedRAM, clRAM;
+    QString manufacturerGPU, seriesGPU, modelGPU, priceGPU, memSizeGPU;
+    QString manufacturerSTG, modelSTG, priceSTG, typeSTG, formSTG, sizeSTG, isnvmeSTG, gen4STG;
+    QString manufacturerCASE, modelCASE, priceCASE, sizeCASE, maxBoardCASE, maxBoardNumCASE, coolerSizeCASE, maxRadCASE;
+    QString manufacturerPSU, modelPSU, pricePSU, wattagePSU, certifiedPSU;
+    QString manufacturerCL, modelCL, intelCL, amdCL, priceCL;
+    QString getCategory(), getPlatform(), getGraphics(), getBudget(), getAll();
+    int total;
+    QString buildTotal;
     void getBuild();
 
 private:

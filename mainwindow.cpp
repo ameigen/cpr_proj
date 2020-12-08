@@ -226,7 +226,7 @@ QString MainWindow::getPlatform(){
    return platform;
 }
 
-QString MainWindow::getGrapgics(){
+QString MainWindow::getGraphics(){
     search gpu;
     QString graphics = gpu.getGraphics();
     return graphics;
@@ -265,27 +265,275 @@ void MainWindow::getBuild(){
     if(db.open()){
         QSqlQuery query(QSqlDatabase::database("aws"));
         query.exec("use CPR");
-        query.prepare("SELECT manufacturer, model, price, category, socket, graphics, chipset, cooler, pcie, memMax \
-                       FROM cpu \
-                       WHERE price BETWEEN 0 AND :price \
-                       ORDER BY :category DESC \
-                       LIMIT 1");
-        query.bindValue(":price", budget.toInt());
-        query.bindValue(":category", category.toLower());
+
+        int maxCPU = (budget.toInt()*18)/100;
+        QString cpuBudget = QString::number(maxCPU);
+        QString searchCPU = "SELECT manufacturer, model, price, category, socket, graphics, chipset, cooler, pcie, memMax \
+                FROM cpu \
+                WHERE price BETWEEN 0 AND " + cpuBudget + " AND \
+                manufacturer LIKE '" + platform + "' \
+                ORDER BY " + category + " DESC \
+                LIMIT 1";
+        query.prepare(searchCPU);
+
         if(query.exec()){
             while(query.next()){
-                QString manufacturer = query.value(0).toString();
-                QString model = query.value(1).toString();
-                QString price = query.value(2).toString();
-                ui->textBrowser->setText("Search Results\n CPU: " + manufacturer + " " + model + " $" + price);
+                manufacturerCPU = query.value(0).toString();
+                modelCPU = query.value(1).toString();
+                priceCPU = query.value(2).toString();
+                segmentCPU = query.value(3).toString();
+                socketCPU = query.value(4).toString();
+                graphicsCPU = query.value(5).toString();
+                chipsetCPU = query.value(6).toString();
+                coolerCPU = query.value(7).toString();
+                pcieCPU = query.value(8).toString();
+                memMaxCPU = query.value(9).toString();
+                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU + " " + socketCPU);
+                statusBar()->showMessage("BUILD Status: searching for CPU...");
+
             }
+        }else(QMessageBox::information(this, "Error", "Query Failed::CPU"));
+
+        int maxMotherboard = (budget.toInt() * 12)/100;
+        QString mbBudget = QString::number(maxMotherboard);
+        QString searchMB = "SELECT manufacturer, model, price, form, chipset, ramMaxSpeed, ramMaxCapacity, socket, m2 \
+                            FROM motherboard \
+                            WHERE price BETWEEN 0 AND " + mbBudget + " \
+                            AND socket LIKE '" + socketCPU + "' \
+                            ORDER BY price DESC LIMIT 1";
+        query.prepare(searchMB);
+
+        if(query.exec()){
+            while(query.next()){
+                manufacturerMB = query.value(0).toString();
+                modelMB = query.value(1).toString();
+                priceMB = query.value(2).toString();
+                formMB = query.value(3).toString();
+                chipsetMB = query.value(4).toString();
+                ramMaxSpeedMB = query.value(5).toString();
+                ramMaxCapacityMB = query.value(6).toString();
+                socketMB = query.value(7).toString();
+                m2MB = query.value(8).toString();
+                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB);
+                statusBar()->showMessage("BUILD Status: searching for Motherboard...");
+
+            }
+        }else(QMessageBox::information(this, "Error", "Query Failed::MOTHERBOARD"));
+
+        int maxMemory = (budget.toInt()*5)/100;
+        QString memBudget = QString::number(maxMemory);
+        QString searchRAM = "SELECT manufacturer, model, type, size, price, speed, cl \
+                            FROM memory \
+                            WHERE price BETWEEN 0 AND " + memBudget + " \
+                            AND size <= " + ramMaxCapacityMB + " \
+                            ORDER BY reliability DESC LIMIT 1";
+        query.prepare(searchRAM);
+
+        if(query.exec()){
+            while(query.next()){
+                manufacturerRAM = query.value(0).toString();
+                modelRAM = query.value(1).toString();
+                typeRAM = query.value(2).toString();
+                sizeRAM = query.value(3).toString();
+                priceRAM = query.value(4).toString();
+                speedRAM = query.value(5).toString();
+                clRAM = query.value(6).toString();
+
+                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
+                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM);
+                statusBar()->showMessage("BUILD Status: searching for RAM...");
+                }
+        }else(QMessageBox::information(this, "Error", "Query Failed::RAM"));
+
+
+        int maxGPU = (budget.toInt()*43)/100;
+        QString gpuBudget = QString::number(maxGPU);
+        QString gpuCat;
+            if(category == "productivity"){
+                gpuCat = "Workstation";
+            }else if(category == "gaming" && maxGPU > 229){
+                gpuCat = "%e%";
+            }else if(category == "gaming" && maxGPU <= 229){
+                gpuCat = "Entry";
+            }
+        QString searchGPU = "SELECT manufacturer, series, model, price, memSize \
+                             FROM gpu \
+                             WHERE manufacturer LIKE '" + graphics + "' \
+                             AND price BETWEEN 0 AND " + gpuBudget + "  \
+                             AND category LIKE '" + gpuCat + "' \
+                             ORDER BY price DESC LIMIT 1";
+        query.prepare(searchGPU);
+
+        if(query.exec()){
+            while(query.next()){
+                manufacturerGPU = query.value(0).toString();
+                seriesGPU = query.value(1).toString();
+                modelGPU = query.value(2).toString();
+                priceGPU = query.value(3).toString();
+                memSizeGPU = query.value(4).toString();
+
+                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
+                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
+                                         + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU);
+                statusBar()->showMessage("BUILD Status: searching for GPU...");
+
+                }
+        }else(QMessageBox::information(this, "Error", "Query Failed::GPU"));
+
+
+        int maxStorage = (budget.toInt()*6)/100;
+        QString stgBudget = QString::number(maxStorage);
+        QString searchSTG = "SELECT manufacturer, model, price, type, form, size, isnvme, gen4 \
+                             FROM storage \
+                             WHERE type LIKE 'ssd' \
+                             AND price BETWEEN 0 AND " + stgBudget + " \
+                             ORDER BY size DESC LIMIT 1";
+        query.prepare(searchSTG);
+
+        if(query.exec()){
+            while(query.next()){
+                manufacturerSTG = query.value(0).toString();
+                modelSTG = query.value(1).toString();
+                priceSTG = query.value(2).toString();
+                typeSTG = query.value(3).toString();
+                formSTG = query.value(4).toString();
+                sizeSTG = query.value(5).toString();
+                isnvmeSTG = query.value(6).toString();
+                gen4STG = query.value(7).toString();
+
+                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
+                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
+                                         + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
+                                         + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG);
+                statusBar()->showMessage("BUILD Status: searching for Storage...");
+                }
+        }else(QMessageBox::information(this, "Error", "Query Failed::STORAGE-SSD"));
+
+
+
+        int maxCase = (budget.toInt()*6)/100;
+        QString caseBudget = QString::number(maxCase);
+        QString maxSize;
+        if(formMB == "ITX"){
+          maxSize = "1";
+        }else if(formMB == "mATX"){
+          maxSize = "2";
+        }else if(formMB == "ATX"){
+          maxSize = "3";
+        }else if(formMB == "EATX"){
+          maxSize = "4";
         }
+        QString searchCASE = "SELECT manufacturer, model, price, size, maxBoard, maxBoardNum, coolerSize, maxRad \
+                             FROM cases \
+                             WHERE price BETWEEN 0 AND " + caseBudget + " \
+                             AND maxBoardNum >= " + maxSize + " \
+                             ORDER BY price DESC LIMIT 1";
+        query.prepare(searchCASE);
+
+        if(query.exec()){
+            while(query.next()){
+                manufacturerCASE = query.value(0).toString();
+                modelCASE = query.value(1).toString();
+                priceCASE = query.value(2).toString();
+                sizeCASE = query.value(3).toString();
+                maxBoardCASE = query.value(4).toString();
+                maxBoardNumCASE = query.value(5).toString();
+                coolerSizeCASE = query.value(6).toString();
+                maxRadCASE = query.value(7).toString();
+
+                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
+                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
+                                         + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
+                                         + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
+                                         + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE);
+                statusBar()->showMessage("BUILD Status: searching for Case...");
+                }
+        }else(QMessageBox::information(this, "Error", "Query Failed::CASE"));
+
+
+        int maxPSU = (budget.toInt()*10)/100;
+        QString psuBudget = QString::number(maxPSU);
+        QString searchPSU = "SELECT manufacturer, model, price, wattage, certified \
+                             FROM psu \
+                             WHERE price BETWEEN 0 and " + psuBudget + " \
+                             ORDER BY wattage DESC LIMIT 1";
+        query.prepare(searchPSU);
+
+        if(query.exec()){
+            while(query.next()){
+                manufacturerPSU = query.value(0).toString();
+                modelPSU = query.value(1).toString();
+                pricePSU = query.value(2).toString();
+                wattagePSU = query.value(3).toString();
+                certifiedPSU = query.value(4).toString();
+
+                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
+                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
+                                         + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
+                                         + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
+                                         + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE
+                                         + "\n PSU: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + " $" + pricePSU);
+                statusBar()->showMessage("BUILD Status: searching for PSU...");
+                }
+        }else(QMessageBox::information(this, "Error", "Query Failed::PSU"));
+
+        total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt() + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt();
+        buildTotal = QString::number(total);
+        ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                                 + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
+                                 + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
+                                 + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
+                                 + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
+                                 + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE
+                                 + "\n PSU: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + " $" + pricePSU
+                                 + "\n\n Total Build cost: $" + buildTotal);
+        statusBar()->showMessage("BUILD Status: Build Complete");
+
+        if(coolerCPU == "no"){
+            int budgetLeft = budget.toInt() - total;
+            QString coolerBudget = QString::number(budgetLeft);
+            QString coolerSearch = "SELECT manufacturer, model, intel, amd, price \
+                                    FROM cooler \
+                                    WHERE price BETWEEN 0 AND " + coolerBudget + " \
+                                    AND sizeNum <= " + coolerSizeCASE + " \
+                                    ORDER BY price DESC LIMIT 1";
+
+            query.prepare(coolerSearch);
+
+            if(query.exec()){
+                while(query.next()){
+                    manufacturerCL = query.value(0).toString();
+                    modelCL = query.value(1).toString();
+                    intelCL = query.value(2).toString();
+                    amdCL = query.value(3).toString();
+                    priceCL = query.value(4).toString();
+
+                    total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt() + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt() + priceCL.toInt();
+                    buildTotal = QString::number(total);
+
+                    ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                                             + "\n COOLER: " + manufacturerCL + " " + modelCL + " $" + priceCL
+                                             + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
+                                             + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
+                                             + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
+                                             + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
+                                             + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE
+                                             + "\n PSU: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + " $" + pricePSU
+                                             + "\n\n Total Build cost: $" + buildTotal);
+                    statusBar()->showMessage("BUILD Status: Build Complete...Added Cooler...");
+                    }
+            }else(QMessageBox::information(this, "Error", "Query Failed::COOLER"));
+        }
+
     }
-
 }
-
-void MainWindow::on_dataBaseCheck_clicked()
-{
+void MainWindow::on_dataBaseCheck_clicked(){
     ConnectDatabase();
 }
 
