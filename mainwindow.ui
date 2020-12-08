@@ -65,7 +65,7 @@ QPushButton:pressed {
 }</string>
       </property>
       <property name="text">
-       <string>Template</string>
+       <string>Template Systems</string>
       </property>
      </widget>
      <widget class="QPushButton" name="customBut">
@@ -91,7 +91,7 @@ QPushButton:pressed {
 }</string>
       </property>
       <property name="text">
-       <string>Custom</string>
+       <string>Build a PC</string>
       </property>
      </widget>
      <widget class="QPushButton" name="dataBaseCheck">
@@ -238,7 +238,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>27</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">

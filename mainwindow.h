@@ -26,12 +26,12 @@ public:
     void saveToFile(); // Basic function for writing to a file.
     void loadFromFile();
     void templateSearch();
-    QString getCategory();
-    QString getPlatform();
     void ConnectDatabase();
     void testRead();
     QString platform;
     QString graphics;
+    QString getCategory();
+    QString getPlatform();
     double budget;
 
 private:

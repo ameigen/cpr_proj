@@ -19,18 +19,18 @@
      <x>30</x>
      <y>20</y>
      <width>371</width>
-     <height>41</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Choose a Template System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;What is the primary use case &lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;of the computer?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="gaming">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>90</y>
+     <x>80</x>
+     <y>110</y>
      <width>80</width>
      <height>21</height>
     </rect>
@@ -42,27 +42,27 @@
   <widget class="QPushButton" name="productivity">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>90</y>
+     <x>170</x>
+     <y>110</y>
      <width>80</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>Productive</string>
+    <string>Productivuty</string>
    </property>
   </widget>
   <widget class="QPushButton" name="both">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>90</y>
+     <x>260</x>
+     <y>110</y>
      <width>80</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>Both</string>
+    <string>Balance</string>
    </property>
   </widget>
  </widget>

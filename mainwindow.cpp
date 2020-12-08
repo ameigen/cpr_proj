@@ -226,12 +226,16 @@ QString MainWindow::getPlatform(){
 
     platform = search.getPlatform();
     graphics = search.getGraphics();
+    QString all;
     QString tempBudget = search.getPrice();
-     qDebug() << tempBudget;
     budget = tempBudget.toDouble();
-     qDebug() << budget;
-     QString all = ("\nCPU: " + platform + "\nGraphics: " + graphics + "\nBudgetString: " + tempBudget + "\nBudgetInt: " + budget);
-    return all;
+     if(tempBudget.toInt()>300){
+     all = ("\nCPU: " + platform + "\nGraphics: " + graphics + "\nBudgetString: " + tempBudget + "\nBudgetInt: " + budget);
+    }else{
+     QMessageBox::information(this, "Failed", "Error, enter a number greater than 300.");
+     }
+     return all;
+
     ui->textBrowser->setText(platform);
 }
 
@@ -281,4 +285,5 @@ void MainWindow::on_customBut_clicked()
     QString one = getCategory();
     QString two = getPlatform();
     ui->textBrowser->setText(one + ", " + two);
+
 }

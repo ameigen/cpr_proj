@@ -8,6 +8,7 @@ search::search(QWidget *parent) :
     ui(new Ui::search)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Prefereneces");
     ui->lineEdit->setValidator(new QIntValidator(this));
     ui->comboBox->addItem("Choose One:");
     ui->comboBox->addItem("AMD");

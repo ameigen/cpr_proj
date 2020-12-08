@@ -10,7 +10,6 @@ CONFIG += c++11
 
 SOURCES += \
     build.cpp \
-    customdialog.cpp \
     dialog.cpp \
     item.cpp \
     main.cpp \
@@ -19,14 +18,12 @@ SOURCES += \
 
 HEADERS += \
     build.h \
-    customdialog.h \
     dialog.h \
     item.h \
     mainwindow.h \
     search.h
 
 FORMS += \
-    customdialog.ui \
     dialog.ui \
     mainwindow.ui \
     search.ui
