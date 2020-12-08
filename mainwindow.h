@@ -30,9 +30,15 @@ public:
     void testRead();
     QString platform;
     QString graphics;
+    QString budget;
+    QString category;
+    QString complete;
     QString getCategory();
     QString getPlatform();
-    double budget;
+    QString getGrapgics();
+    QString getBudget();
+    QString getAll();
+    void getBuild();
 
 private:
     Ui::MainWindow *ui;

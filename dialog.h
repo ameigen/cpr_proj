@@ -2,6 +2,7 @@
  * Dialog Class authored by Javier R.
  * + dialog.h
  * + dialog.cpp
+ * + dialog.ui
  */
 #ifndef DIALOG_H
 #define DIALOG_H
@@ -21,7 +22,7 @@ public:
     explicit Dialog(QWidget *parent = nullptr);
     ~Dialog();
     QString category;
-    QString getQuery();
+    QString getCategory();
 
 private slots:
     void on_gaming_clicked();
@@ -30,7 +31,6 @@ private slots:
 
 private:
     Ui::Dialog *ui;
-    QString queryGaming();
 };
 
 #endif // DIALOG_H

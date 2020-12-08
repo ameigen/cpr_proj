@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     statusBar()->showMessage("Attempting to connect to server...");
     ConnectDatabase();
+
 }
 
 MainWindow::~MainWindow()
@@ -164,7 +165,7 @@ void MainWindow::templateSearch()
 
        //Prepares an SQL Query From Dialog Choice
        QSqlQuery query(QSqlDatabase::database("aws"));
-       QString category = dialog.getQuery();
+       QString category = dialog.getCategory();
        qDebug() << category;
        query.prepare("SELECT * FROM TemplateBuild");
        //query.bindValue(":cat", "gaming");
@@ -211,32 +212,76 @@ void MainWindow::templateSearch()
 }
 
 QString MainWindow::getCategory(){
-    Dialog dialog;
-    dialog.setModal(true);
-    dialog.exec();
+    Dialog category;
+    category.setModal(true);
+    category.exec();
 
-    QString category = ("Category: " + dialog.getQuery());
-    return category;
+    QString catString = category.getCategory();
+    return catString;
 }
 
 QString MainWindow::getPlatform(){
-    search search;
-    search.setModal(true);
-    search.exec();
+   search cpu;
+   QString platform = cpu.getPlatform();
+   return platform;
+}
 
-    platform = search.getPlatform();
-    graphics = search.getGraphics();
-    QString all;
-    QString tempBudget = search.getPrice();
-    budget = tempBudget.toDouble();
-     if(tempBudget.toInt()>300){
-     all = ("\nCPU: " + platform + "\nGraphics: " + graphics + "\nBudgetString: " + tempBudget + "\nBudgetInt: " + budget);
-    }else{
-     QMessageBox::information(this, "Failed", "Error, enter a number greater than 300.");
-     }
-     return all;
+QString MainWindow::getGrapgics(){
+    search gpu;
+    QString graphics = gpu.getGraphics();
+    return graphics;
+}
+
+QString MainWindow::getBudget(){
+    search price;
+    QString budget = price.getPrice();
+    return budget;
+}
+
+QString MainWindow::getAll(){
+    Dialog cat;
+    cat.setModal(true);
+    cat.exec();
+
+    category = cat.getCategory();
+
+    search all;
+    all.setModal(true);
+    all.exec();
+
+    platform = all.getPlatform();
+    graphics = all.getGraphics();
+    budget = all.getPrice();
+
+    complete = ("Category: " + category + "\nCPU: " + platform + "\nGraphics: " + graphics + "\nBudget: " + budget);
+
+    return complete;
 
     ui->textBrowser->setText(platform);
+}
+
+void MainWindow::getBuild(){
+
+    if(db.open()){
+        QSqlQuery query(QSqlDatabase::database("aws"));
+        query.exec("use CPR");
+        query.prepare("SELECT manufacturer, model, price, category, socket, graphics, chipset, cooler, pcie, memMax \
+                       FROM cpu \
+                       WHERE price BETWEEN 0 AND :price \
+                       ORDER BY :category DESC \
+                       LIMIT 1");
+        query.bindValue(":price", budget.toInt());
+        query.bindValue(":category", category.toLower());
+        if(query.exec()){
+            while(query.next()){
+                QString manufacturer = query.value(0).toString();
+                QString model = query.value(1).toString();
+                QString price = query.value(2).toString();
+                ui->textBrowser->setText("Search Results\n CPU: " + manufacturer + " " + model + " $" + price);
+            }
+        }
+    }
+
 }
 
 void MainWindow::on_dataBaseCheck_clicked()
@@ -282,8 +327,13 @@ void MainWindow::on_testRead_clicked()
 
 void MainWindow::on_customBut_clicked()
 {
-    QString one = getCategory();
-    QString two = getPlatform();
-    ui->textBrowser->setText(one + ", " + two);
+    //QString all = getAll();
+    //ui->textBrowser->setText(all);
+
+    getAll();
+
+    QMessageBox::information(this, "Your Search", complete);
+
+    getBuild();
 
 }
