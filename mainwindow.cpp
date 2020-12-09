@@ -30,7 +30,11 @@ MainWindow::~MainWindow()
 }
 
 /* ||==================|| Save/Load Functions START ||==================|| */
+/* the saveToFile() function allows the user to save the displayed SQL data to a text file, and allows the user to choose the save location.
+ * the loadFromFile() function allows the user to navigate to a directory and choose which text file to load, and displays the data. */
 
+/** saveToFile() function authored by Lyndsey, but fully developed and completed by Jonathan.
+ * A majority of the graphical section (mainwindow.ui) was started by Lyndsey, then worked on by the rest of the group **/
 void MainWindow::saveToFile() // Basic function for writing to a file.
 {
     QString saveFile = QFileDialog::getSaveFileName(this, // Opens file explorer.
@@ -39,7 +43,7 @@ void MainWindow::saveToFile() // Basic function for writing to a file.
 
     QFile file(saveFile);
 
-    if (file.open(QIODevice::WriteOnly)) // If the file is open, begin read/write.
+    if (file.open(QIODevice::WriteOnly)) // If the file is open, write only.
     {
         QTextStream stream(&file); // "Stream" = Write to the file, stream << is like cin.
         stream << "Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
@@ -55,9 +59,7 @@ void MainWindow::saveToFile() // Basic function for writing to a file.
     }
 }
 
-/** saveToFile function authored by Lyndsey, but fully developed and completed by Jonathan. A majority of the graphical section (mainwindow.ui)
- * was designed by Lyndsey, as well. **/
-
+/** loadFromFile() function and textBrowser view box (right side window of UI) authored by Jonathan **/
 void MainWindow::loadFromFile()
 {
     QString loadFile = QFileDialog::getOpenFileName(this, // opens a directory window to choose from multiple .txt files
@@ -76,16 +78,13 @@ void MainWindow::loadFromFile()
     statusBar()->showMessage("File Loaded"); // displays a "file saved" notification in the status bar below the UI
 }
 
-/** loadFromFile function authored by Jonathan, and
- * textBrowser view box (right side window of UI) authored by Jonathan **/
-
 /* ||==================|| Save/Load Functions END ||==================|| */
 
 /* ||==================|| Database Functions START ||==================|| */
 
 //Proof of concept for reading in data. Made with sqlite because mySQL was not working at the time.
 
-/** ConnectDatabase authored by Javier R. */
+/** ConnectDatabase authored by Javier R. **/
 void MainWindow::ConnectDatabase(){
     statusBar()->showMessage("Attempting to connect to server...");
     db = QSqlDatabase::addDatabase("QMYSQL", "aws"); //Declaration of database db with the name "aws"
@@ -103,7 +102,6 @@ void MainWindow::ConnectDatabase(){
         QMessageBox::information(this, "Not Connected", "No Connection to Database");
     }
 }
-
 
 /** templateSearch method by Javier R. **/
 void MainWindow::templateSearch()
@@ -126,7 +124,8 @@ void MainWindow::templateSearch()
        QString category = dialog.getCategory();
     }
 }
-/** getALl authored by Javier R. */
+
+/** getALl authored by Javier R. **/
 /* This will get the prefernences and input
  * parameters used to query the database
  */
@@ -149,7 +148,8 @@ QString MainWindow::getAll(){
 
     return complete;
 }
-/** getBuild authored by Javier R. */
+
+/** getBuild authored by Javier R. **/
 /*  Using the initial user input as search parameters getBuild will
  *  query the database in a multistep process using the results to
  *  find matching parts and compose a complete build.
@@ -571,14 +571,14 @@ void MainWindow::on_loadBuild_triggered(){
     loadFromFile();
 }
 
+/** close function authored by Eliazar **/
 void MainWindow::on_actionQuit_triggered(){
     close();
 }
-/** close function authored by Eliazar */
 /* ||==================|| Trigger Functions END ||==================|| */
 
 /* ||==================|| Clicked Functions START ||==================|| */
-/** Build a PC funtion authored by Javier R. */
+/** Build a PC funtion authored by Javier R. **/
 void MainWindow::on_customBut_clicked(){
     ui->textBrowser->clear();
     getAll();
