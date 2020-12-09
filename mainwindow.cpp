@@ -83,7 +83,7 @@ void MainWindow::loadFromFile()
 
 //Proof of concept for reading in data. Made with sqlite because mySQL was not working at the time.
 
-/** ConnectDatabase method by Javier R. **/
+/** ConnectDatabase authored by Javier R. */
 void MainWindow::ConnectDatabase(){
     statusBar()->showMessage("Attempting to connect to server...");
     db = QSqlDatabase::addDatabase("QMYSQL", "aws"); //Declaration of database db with the name "aws"
@@ -222,33 +222,10 @@ void MainWindow::templateSearch()
     }
 }
 
-QString MainWindow::getCategory(){
-    Dialog category;
-    category.setModal(true);
-    category.exec();
-
-    QString catString = category.getCategory();
-    return catString;
-}
-
-QString MainWindow::getPlatform(){
-   search cpu;
-   QString platform = cpu.getPlatform();
-   return platform;
-}
-
-QString MainWindow::getGraphics(){
-    search gpu;
-    QString graphics = gpu.getGraphics();
-    return graphics;
-}
-
-QString MainWindow::getBudget(){
-    search price;
-    QString budget = price.getPrice();
-    return budget;
-}
-
+/** getALl authored by Javier R. */
+/* This will get the prefernences and input
+ * parameters used to query the database
+ */
 QString MainWindow::getAll(){
     Dialog cat;
     cat.setModal(true);
@@ -267,28 +244,34 @@ QString MainWindow::getAll(){
     complete = ("Category: " + category + "\nCPU: " + platform + "\nGraphics: " + graphics + "\nBudget: " + budget);
 
     return complete;
-
-    ui->textBrowser->setText(platform);
 }
-
+/** getBuild authored by Javier R. */
+/*  Using the initial user input as search parameters getBuild will
+ *  query the database in a multistep process using the results to
+ *  find matching parts and compose a complete build.
+ */
 void MainWindow::getBuild(){
-
+    ui->textBrowser->clear();
     if(db.open()){
         QSqlQuery query(QSqlDatabase::database("aws"));
         query.exec("use CPR");
 
-        int maxCPU = (budget.toInt()*18)/100;
-        QString cpuBudget = QString::number(maxCPU);
+        /**** START OF PASS ONE :: PARTS FINDER ****/
+        /* Step 1 - Query for CPU */
+        int maxCPU = (budget.toInt()*18)/100;   // Sets value to 18% of user input for Budget
+        QString cpuBudget = QString::number(maxCPU);    // converts value to QString type
         QString searchCPU = "SELECT manufacturer, model, price, category, socket, graphics, chipset, cooler, pcie, memMax \
                 FROM cpu \
                 WHERE price BETWEEN 0 AND " + cpuBudget + " AND \
                 manufacturer LIKE '" + platform + "' \
                 ORDER BY " + category + " DESC \
-                LIMIT 1";
+                LIMIT 1";   // Query used to search for matching CPU
         query.prepare(searchCPU);
 
-        if(query.exec()){
-            while(query.next()){
+        if(query.exec()){ // Checks for error in query
+
+            statusBar()->clearMessage();
+            while(query.next()){    // Stores query results in global variables
                 manufacturerCPU = query.value(0).toString();
                 modelCPU = query.value(1).toString();
                 priceCPU = query.value(2).toString();
@@ -300,11 +283,16 @@ void MainWindow::getBuild(){
                 pcieCPU = query.value(8).toString();
                 memMaxCPU = query.value(9).toString();
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU + " " + socketCPU);
-                statusBar()->showMessage("BUILD Status: searching for CPU...");
-
             }
-        }else(QMessageBox::information(this, "Error", "Query Failed::CPU"));
+            if(manufacturerCPU.isNull()){
+                QMessageBox::information(this, "Error!", "No item found for CPU within budget");
+            }
+        }else{
+            QMessageBox::information(this, "Error", "Query Failed::CPU");
+            statusBar()->showMessage("BUILD Status: Query Failed for CPU");
+        }   // Error message
 
+        /* Step 2 - Query for Motherboard */
         int maxMotherboard = (budget.toInt() * 12)/100;
         QString mbBudget = QString::number(maxMotherboard);
         QString searchMB = "SELECT manufacturer, model, price, form, chipset, ramMaxSpeed, ramMaxCapacity, socket, m2 \
@@ -330,8 +318,15 @@ void MainWindow::getBuild(){
                 statusBar()->showMessage("BUILD Status: searching for Motherboard...");
 
             }
-        }else(QMessageBox::information(this, "Error", "Query Failed::MOTHERBOARD"));
+            if(manufacturerMB.isNull()){
+                QMessageBox::information(this, "Error!", "No item found for Motherboard within budget");
+            }
+        }else{
+            QMessageBox::information(this, "Error", "Query Failed::MB");
+            statusBar()->showMessage("BUILD Status: Query Failed for Motherboard");
+        }
 
+        /* Step 3 - Query for Memory */
         int maxMemory = (budget.toInt()*5)/100;
         QString memBudget = QString::number(maxMemory);
         QString searchRAM = "SELECT manufacturer, model, type, size, price, speed, cl \
@@ -356,9 +351,15 @@ void MainWindow::getBuild(){
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM);
                 statusBar()->showMessage("BUILD Status: searching for RAM...");
                 }
-        }else(QMessageBox::information(this, "Error", "Query Failed::RAM"));
+            if(manufacturerRAM.isNull()){
+                QMessageBox::information(this, "Error!", "No item found for Memory within budget");
+            }
+        }else{
+            QMessageBox::information(this, "Error", "Query Failed::RAM");
+            statusBar()->showMessage("BUILD Status: Query Failed for Memory");
+        }
 
-
+        /* Step 4 - Query for Graphics Card */
         int maxGPU = (budget.toInt()*43)/100;
         QString gpuBudget = QString::number(maxGPU);
         QString gpuCat;
@@ -389,12 +390,17 @@ void MainWindow::getBuild(){
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
                                          + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU);
-                statusBar()->showMessage("BUILD Status: searching for GPU...");
-
+                statusBar()->showMessage("BUILD Status: searching for GPU...");              
                 }
-        }else(QMessageBox::information(this, "Error", "Query Failed::GPU"));
+            if(manufacturerGPU.isNull()){
+                QMessageBox::information(this, "Error!", "No item found for GPU within budget");
+            }
+        }else{
+            QMessageBox::information(this, "Error", "Query Failed::GPU");
+            statusBar()->showMessage("BUILD Status: Query Failed for Graphics Card");
+        }
 
-
+        /* Step 5 - Query for SSD */
         int maxStorage = (budget.toInt()*6)/100;
         QString stgBudget = QString::number(maxStorage);
         QString searchSTG = "SELECT manufacturer, model, price, type, form, size, isnvme, gen4 \
@@ -422,10 +428,15 @@ void MainWindow::getBuild(){
                                          + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG);
                 statusBar()->showMessage("BUILD Status: searching for Storage...");
                 }
-        }else(QMessageBox::information(this, "Error", "Query Failed::STORAGE-SSD"));
+            if(manufacturerSTG.isNull()){
+                QMessageBox::information(this, "Error!", "No item found for SSD within budget");
+            }
+        }else{
+            QMessageBox::information(this, "Error", "Query Failed::STG");
+            statusBar()->showMessage("BUILD Status: Query Failed for SSD");
+        }
 
-
-
+        /* Step 6 - Query for Encolsure */
         int maxCase = (budget.toInt()*6)/100;
         QString caseBudget = QString::number(maxCase);
         QString maxSize;
@@ -446,6 +457,7 @@ void MainWindow::getBuild(){
         query.prepare(searchCASE);
 
         if(query.exec()){
+            statusBar()->clearMessage();
             while(query.next()){
                 manufacturerCASE = query.value(0).toString();
                 modelCASE = query.value(1).toString();
@@ -464,9 +476,15 @@ void MainWindow::getBuild(){
                                          + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE);
                 statusBar()->showMessage("BUILD Status: searching for Case...");
                 }
-        }else(QMessageBox::information(this, "Error", "Query Failed::CASE"));
+            if(manufacturerCASE.isNull()){
+                QMessageBox::information(this, "Error!", "No item found for Computer Case within budget");
+            }
+        }else{
+            QMessageBox::information(this, "Error", "Query Failed::CASE");
+            statusBar()->showMessage("BUILD Status: Query Failed for Enclosure");
+        }
 
-
+        /* Step 7 - Query for Power Supply Unit */
         int maxPSU = (budget.toInt()*10)/100;
         QString psuBudget = QString::number(maxPSU);
         QString searchPSU = "SELECT manufacturer, model, price, wattage, certified \
@@ -476,6 +494,7 @@ void MainWindow::getBuild(){
         query.prepare(searchPSU);
 
         if(query.exec()){
+            statusBar()->clearMessage();
             while(query.next()){
                 manufacturerPSU = query.value(0).toString();
                 modelPSU = query.value(1).toString();
@@ -492,10 +511,17 @@ void MainWindow::getBuild(){
                                          + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU);
                 statusBar()->showMessage("BUILD Status: searching for PSU...");
                 }
-        }else(QMessageBox::information(this, "Error", "Query Failed::PSU"));
+            if(manufacturerPSU.isNull()){
+                QMessageBox::information(this, "Error!", "No item found for Power Supply within budget");
+            }
+        }else{
+            QMessageBox::information(this, "Error", "Query Failed::PSU");
+            statusBar()->showMessage("BUILD Status: Query Failed for Power Supply");
+        }
 
-        total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt() + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt();
-        buildTotal = QString::number(total);
+        total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt()
+                + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt(); //adds price values from each part chosen
+        buildTotal = QString::number(total);    //
         ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
                                  + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                  + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
@@ -504,9 +530,13 @@ void MainWindow::getBuild(){
                                  + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
                                  + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
                                  + "\n\n Total Build Cost: $" + buildTotal);
-        statusBar()->showMessage("BUILD Status: Build Complete");
+        statusBar()->showMessage("BUILD Status: Build Complete"); // Final results are printed on the screen and status bar is updated
 
-        if(coolerCPU == "no"){
+        /**** END OF PASS ONE :: PARTS FINDER ****/
+
+        /**** START OF PASS TWO :: PARTS FINDER ****/
+        /* Step 8 - Query for CPU Cooler */
+        if(coolerCPU == "no"){  // Checks if there is a missing cooler and fills that  part.
             int budgetLeft = budget.toInt() - total;
             QString coolerBudget = QString::number(budgetLeft);
             QString coolerSearch = "SELECT manufacturer, model, intel, amd, price \
@@ -514,10 +544,10 @@ void MainWindow::getBuild(){
                                     WHERE price BETWEEN 0 AND " + coolerBudget + " \
                                     AND sizeNum <= " + coolerSizeCASE + " \
                                     ORDER BY price DESC LIMIT 1";
-
             query.prepare(coolerSearch);
 
             if(query.exec()){
+                statusBar()->clearMessage();
                 while(query.next()){
                     manufacturerCL = query.value(0).toString();
                     modelCL = query.value(1).toString();
@@ -537,62 +567,53 @@ void MainWindow::getBuild(){
                                              + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
                                              + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
                                              + "\n\n Total Build Cost: $" + buildTotal);
-                    statusBar()->showMessage("BUILD Status: Build Complete...Added Cooler...");
+                    statusBar()->showMessage("BUILD Status: Build Complete...CPU Cooler added...");
                     }
-            }else(QMessageBox::information(this, "Error", "Query Failed::COOLER"));
+                if(manufacturerCL.isNull()){
+                    QMessageBox::information(this, "Error!", "No item found for CPU Cooler within budget");
+                }
+            }else{
+                QMessageBox::information(this, "Error", "Query Failed::CL");
+                statusBar()->showMessage("BUILD Status: Query Failed for CPU Cooler");
+            }
         }
+        /**** END OF PASS TWO :: PARTS FINDER ****/
+    }//CLOSE DB OPEN CHECKER
+}//CLOSE getBuild
+/* ||==================|| Database Functions END ||==================|| */
 
-    }
+/* ||==================|| Trigger Functions START ||==================|| */
+void MainWindow::on_saveBuild_triggered(){
+    saveToFile();
 }
+
+void MainWindow::on_loadBuild_triggered(){
+    loadFromFile();
+}
+
+void MainWindow::on_actionQuit_triggered(){
+    close();
+}
+/** close function authored by Eliazar */
+/* ||==================|| Trigger Functions END ||==================|| */
+
+/* ||==================|| Clicked Functions START ||==================|| */
+void MainWindow::on_testRead_clicked(){
+    testRead();
+}
+/** Build a PC funtion authored by Javier R. */
+void MainWindow::on_customBut_clicked(){
+    ui->textBrowser->clear();
+    getAll();
+    QMessageBox::information(this, "Your Search", complete);
+    getBuild();
+}
+
 void MainWindow::on_dataBaseCheck_clicked(){
     ConnectDatabase();
 }
 
-//Action for pressing the "Template" button
-void MainWindow::on_templateBut_clicked()
-{
+void MainWindow::on_templateBut_clicked(){
     templateSearch();
 }
-
-/* ||==================|| Database Functions END ||==================|| */
-
-
-/* ||==================|| Trigger Functions START ||==================|| */
-
-void MainWindow::on_saveBuild_triggered()
-{
-    saveToFile();
-}
-
-void MainWindow::on_loadBuild_triggered()
-{
-    loadFromFile();
-}
-
-void MainWindow::on_actionQuit_triggered()
-{
-    close();
-}
-
-/* close function authored by Eliazar */
-
-/* ||==================|| Trigger Functions END ||==================|| */
-
-void MainWindow::on_testRead_clicked()
-{
-    testRead();
-}
-
-
-void MainWindow::on_customBut_clicked()
-{
-    //QString all = getAll();
-    //ui->textBrowser->setText(all);
-
-    getAll();
-
-    QMessageBox::information(this, "Your Search", complete);
-
-    getBuild();
-
-}
+/* ||==================|| Clicked Functions END ||==================|| */

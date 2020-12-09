@@ -40,7 +40,6 @@ private slots:
 
     void on_comboBox_2_activated(const QString &arg1);
 
-    void on_comboBox_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::search *ui;

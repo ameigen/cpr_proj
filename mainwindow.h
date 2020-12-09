@@ -43,7 +43,7 @@ public:
     QString manufacturerCASE, modelCASE, priceCASE, sizeCASE, maxBoardCASE, maxBoardNumCASE, coolerSizeCASE, maxRadCASE;
     QString manufacturerPSU, modelPSU, pricePSU, wattagePSU, certifiedPSU;
     QString manufacturerCL, modelCL, intelCL, amdCL, priceCL;
-    QString getCategory(), getPlatform(), getGraphics(), getBudget(), getAll();
+    QString getAll();
     int total;
     QString buildTotal;
     void getBuild();

@@ -45,7 +45,6 @@ void search::on_pushButton_clicked(){
     }else{
         QMessageBox::information(this, "Error", "Please enter a number between 0 and 99,999");
     }
-
 }
 
 void search::on_comboBox_activated(const QString &arg1){
