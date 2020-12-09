@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>731</width>
-    <height>498</height>
+    <height>568</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -397,7 +397,7 @@ p, li { white-space: pre-wrap; }
       <x>300</x>
       <y>0</y>
       <width>431</width>
-      <height>441</height>
+      <height>511</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -416,7 +416,7 @@ p, li { white-space: pre-wrap; }
        <x>0</x>
        <y>0</y>
        <width>419</width>
-       <height>429</height>
+       <height>499</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -428,7 +428,7 @@ p, li { white-space: pre-wrap; }
         <x>0</x>
         <y>0</y>
         <width>421</width>
-        <height>431</height>
+        <height>501</height>
        </rect>
       </property>
       <property name="acceptDrops">

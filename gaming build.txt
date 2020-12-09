@@ -1,27 +1,37 @@
 Search Results
 
-- CPU: AMD Ryzen 7 5800X
-  Price $449
+  Build Budget: $3000
 
-- COOLER:  
-  Price $
+- CPU: 
+  Intel i9-10900K
+  Price $499
 
-- MOTHERBOARD: Gigabyte Aorus Master X570
-  Price $349
+- COOLER: 
+  NZXT  Kraken Z63
+  Price $249
 
-- RAM: Corsair Vengence RGB Pro DDR4 16GB 3200Mhz CL16
-  Price $79
-
-- GPU: AMD Radeon RX 6900XT 16GB
-  Price $999
-
-- SSD: Kingston A400 1920GB
-  Price $179
-
-- CASE: Corsair Crystal 280X Micro Tower
-  Price $179
-
-- POWER SUPPLY UNIT: EVGA SuperNova P2 1000W 80+ platinum
+- MOTHERBOARD: 
+  Gigabyte Z490 Aours Ultra Z490
   Price $299
 
- Total Build Cost: $2533
+- RAM: 
+  Corsair Vengence RGB Pro DDR4 16GB 3200Mhz CL16
+  Price $79
+
+- GPU: 
+  Nvidia GeForce GTX Titan X 12GB
+  Price $1200
+
+- SSD: 
+  Kingston A400 1920GB
+  Price $179
+
+- CASE: 
+  Corsair Crystal 280X Micro Tower
+  Price $179
+
+- POWER SUPPLY UNIT: 
+  EVGA SuperNova P2 1000W 80+ platinum
+  Price $299
+
+ Total Build Cost: $2983

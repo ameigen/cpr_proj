@@ -46,14 +46,15 @@ void MainWindow::saveToFile() // Basic function for writing to a file.
     if (file.open(QIODevice::WriteOnly)) // If the file is open, write only.
     {
         QTextStream stream(&file); // "Stream" = Write to the file, stream << is like cin.
-        stream << "Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                  + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + "\n  Price $" + priceCL
-                  + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
-                  + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
-                  + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
-                  + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
-                  + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
-                  + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
+        stream << "Search Results\n\n  Build Budget: $" + budget
+                  + "\n\n- CPU: \n  " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                  + "\n\n- COOLER: \n  " + manufacturerCL + " " + modelCL + "\n  Price $" + priceCL
+                  + "\n\n- MOTHERBOARD: \n  " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                  + "\n\n- RAM: \n  " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                  + "\n\n- GPU: \n  " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                  + "\n\n- SSD: \n  " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
+                  + "\n\n- CASE: \n  " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
+                  + "\n\n- POWER SUPPLY UNIT: \n  " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
                   + "\n\n Total Build Cost: $" + buildTotal;
         statusBar()->showMessage("File Saved"); // displays a "file saved" notification in the status bar below the UI
     }
@@ -438,15 +439,15 @@ void MainWindow::getBuild(){
         total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt()
                 + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt(); //adds price values from each part chosen
         buildTotal = QString::number(total);    //
-        ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                 + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
-                                 + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
-                                 + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
-                                 + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
-                                 + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
-                                 + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
-                                 + "\n\n Total Build Cost: $" + buildTotal
-                                 + "\n\n Build Budget: $" + budget);
+        ui->textBrowser->setText("Search Results\n\n  Build Budget: $" + budget
+                                 + "\n\n- CPU: \n  " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                 + "\n\n- MOTHERBOARD: \n  " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                 + "\n\n- RAM: \n  " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                                 + "\n\n- GPU: \n  " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                                 + "\n\n- STORAGE (SSD/HDD): \n  " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
+                                 + "\n\n- CASE: \n  " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
+                                 + "\n\n- POWER SUPPLY UNIT: \n  " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
+                                 + "\n\n Total Build Cost: $" + buildTotal);
         statusBar()->showMessage("BUILD Status: Build Complete"); // Final results are printed on the screen and status bar is updated
 
         /**** END OF PASS ONE :: PARTS FINDER ****/
@@ -477,16 +478,16 @@ void MainWindow::getBuild(){
                     total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt() + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt() + priceCL.toInt();
                     buildTotal = QString::number(total);
 
-                    ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                             + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + "\n  Price $" + priceCL
-                                             + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
-                                             + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
-                                             + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
-                                             + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
-                                             + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
-                                             + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
-                                             + "\n\n Total Build Cost: $" + buildTotal
-                                             + "\n\n Build Budget: $" + budget);
+                    ui->textBrowser->setText("Search Results\n\n  Build Budget: $" + budget
+                                             + "\n\n- CPU: \n  " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                             + "\n\n- COOLER: \n  " + manufacturerCL + " " + modelCL + "\n  Price $" + priceCL
+                                             + "\n\n- MOTHERBOARD: \n  " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                             + "\n\n- RAM: \n  " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                                             + "\n\n- GPU: \n  " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                                             + "\n\n- STORAGE (SSD/HDD): \n  " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
+                                             + "\n\n- CASE: \n  " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
+                                             + "\n\n- POWER SUPPLY UNIT: \n  " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
+                                             + "\n\n Total Build Cost: $" + buildTotal);
                     statusBar()->showMessage("BUILD Status: Build Complete...CPU Cooler added...");
                     cooler.push_back(QString("Cooler"));
                     for(int i = 0; i <= 4; ++i){
