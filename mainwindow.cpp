@@ -40,21 +40,21 @@ void MainWindow::saveToFile() // Basic function for writing to a file.
     if (file.open(QIODevice::WriteOnly)) // If the file is open, begin read/write.
     {
         QTextStream stream(&file); // "Stream" = Write to the file, stream << is like cin.
-        stream << "Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                  + "\n COOLER: " + manufacturerCL + " " + modelCL + " $" + priceCL
-                  + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
-                  + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
-                  + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
-                  + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
-                  + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE
-                  + "\n PSU: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + " $" + pricePSU
-                  + "\n\n Total Build cost: $" + buildTotal;
+        stream << "Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                  + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + "\n  Price $" + priceCL
+                  + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                  + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                  + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                  + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
+                  + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
+                  + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
+                  + "\n\n Total Build Cost: $" + buildTotal;
         statusBar()->showMessage("File Saved"); // displays a "file saved" notification in the status bar below the UI
     }
 }
 
-/* saveToFile function authored by Lyndsey, but fully developed and completed by Jonathan. A majority of the graphical section (mainwindow.ui)
- * was designed by Lyndsey, as well. */
+/** saveToFile function authored by Lyndsey, but fully developed and completed by Jonathan. A majority of the graphical section (mainwindow.ui)
+ * was designed by Lyndsey, as well. **/
 
 void MainWindow::loadFromFile()
 {
@@ -74,8 +74,8 @@ void MainWindow::loadFromFile()
     statusBar()->showMessage("File Loaded"); // displays a "file saved" notification in the status bar below the UI
 }
 
-/* loadFromFile function authored by Jonathan, and
- * textBrowser view box (right side window of UI) authored by Jonathan */
+/** loadFromFile function authored by Jonathan, and
+ * textBrowser view box (right side window of UI) authored by Jonathan **/
 
 /* ||==================|| Save/Load Functions END ||==================|| */
 
@@ -299,7 +299,8 @@ void MainWindow::getBuild(){
                 coolerCPU = query.value(7).toString();
                 pcieCPU = query.value(8).toString();
                 memMaxCPU = query.value(9).toString();
-                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU + " " + socketCPU);
+                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU + " " + socketCPU
+                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL);
                 statusBar()->showMessage("BUILD Status: searching for CPU...");
 
             }
@@ -325,8 +326,9 @@ void MainWindow::getBuild(){
                 ramMaxCapacityMB = query.value(6).toString();
                 socketMB = query.value(7).toString();
                 m2MB = query.value(8).toString();
-                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB);
+                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
+                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB);
                 statusBar()->showMessage("BUILD Status: searching for Motherboard...");
 
             }
@@ -351,9 +353,10 @@ void MainWindow::getBuild(){
                 speedRAM = query.value(5).toString();
                 clRAM = query.value(6).toString();
 
-                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
-                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM);
+                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
+                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM);
                 statusBar()->showMessage("BUILD Status: searching for RAM...");
                 }
         }else(QMessageBox::information(this, "Error", "Query Failed::RAM"));
@@ -385,10 +388,11 @@ void MainWindow::getBuild(){
                 priceGPU = query.value(3).toString();
                 memSizeGPU = query.value(4).toString();
 
-                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
-                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
-                                         + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU);
+                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
+                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                                         + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU);
                 statusBar()->showMessage("BUILD Status: searching for GPU...");
 
                 }
@@ -415,11 +419,12 @@ void MainWindow::getBuild(){
                 isnvmeSTG = query.value(6).toString();
                 gen4STG = query.value(7).toString();
 
-                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
-                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
-                                         + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
-                                         + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG);
+                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
+                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                                         + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                                         + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG);
                 statusBar()->showMessage("BUILD Status: searching for Storage...");
                 }
         }else(QMessageBox::information(this, "Error", "Query Failed::STORAGE-SSD"));
@@ -456,12 +461,13 @@ void MainWindow::getBuild(){
                 coolerSizeCASE = query.value(6).toString();
                 maxRadCASE = query.value(7).toString();
 
-                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
-                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
-                                         + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
-                                         + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
-                                         + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE);
+                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
+                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                                         + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                                         + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
+                                         + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE);
                 statusBar()->showMessage("BUILD Status: searching for Case...");
                 }
         }else(QMessageBox::information(this, "Error", "Query Failed::CASE"));
@@ -483,27 +489,29 @@ void MainWindow::getBuild(){
                 wattagePSU = query.value(3).toString();
                 certifiedPSU = query.value(4).toString();
 
-                ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                                         + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
-                                         + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
-                                         + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
-                                         + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
-                                         + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE
-                                         + "\n PSU: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + " $" + pricePSU);
+                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
+                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                                         + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                                         + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
+                                         + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
+                                         + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU);
                 statusBar()->showMessage("BUILD Status: searching for PSU...");
                 }
         }else(QMessageBox::information(this, "Error", "Query Failed::PSU"));
 
         total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt() + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt();
         buildTotal = QString::number(total);
-        ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                                 + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
-                                 + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
-                                 + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
-                                 + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
-                                 + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE
-                                 + "\n PSU: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + " $" + pricePSU
-                                 + "\n\n Total Build cost: $" + buildTotal);
+        ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                 + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
+                                 + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                 + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                                 + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                                 + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
+                                 + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
+                                 + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
+                                 + "\n\n Total Build Cost: $" + buildTotal);
         statusBar()->showMessage("BUILD Status: Build Complete");
 
         if(coolerCPU == "no"){
@@ -528,15 +536,15 @@ void MainWindow::getBuild(){
                     total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt() + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt() + priceCL.toInt();
                     buildTotal = QString::number(total);
 
-                    ui->textBrowser->setText("Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
-                                             + "\n COOLER: " + manufacturerCL + " " + modelCL + " $" + priceCL
-                                             + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
-                                             + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
-                                             + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
-                                             + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
-                                             + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE
-                                             + "\n PSU: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + " $" + pricePSU
-                                             + "\n\n Total Build cost: $" + buildTotal);
+                    ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
+                                             + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + "\n  Price $" + priceCL
+                                             + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
+                                             + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
+                                             + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
+                                             + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
+                                             + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
+                                             + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
+                                             + "\n\n Total Build Cost: $" + buildTotal);
                     statusBar()->showMessage("BUILD Status: Build Complete...Added Cooler...");
                     }
             }else(QMessageBox::information(this, "Error", "Query Failed::COOLER"));
