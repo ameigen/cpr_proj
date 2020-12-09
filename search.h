@@ -9,6 +9,7 @@
  * Font size
  * Color scheme
  * Positioning of objects
+ * + search.ui
  */
 #ifndef SEARCH_H
 #define SEARCH_H
