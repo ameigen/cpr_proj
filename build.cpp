@@ -1,129 +1,146 @@
+//||++++++++++++Alexander Alvarez++++++++++++||
 #include "build.h"
 
-/*
-        unsigned int getUID();
-        QString getCategory(), getMSRP(), getName(), getPlatform(), getFF(), getCPU(), getMB(),
-        getCooler(), getRAM(), getSTRG(), getPSU(), getGPU(), getCase(), getExtras();
-        Build(QString specs[16]);
-*/
-
-/* Our default constructor intakes an array and parses through it for data.
- * This data is itterated through and placed into it's respective position
- * in the Build objects items array.
+/* addDetail() pushes a part along with it's subsequent buildDetails
+ * to our buildDetails vector.
+ *
+ * moreInfoDump() returns a formatted QString holding all of the
+ * extra info stored inside of the build.
+ *
+ * get%Info() returns a vector of QStrings holding a part's
+ * buildDetails.
  */
-Build::Build(QString specs[18])
+
+std::vector<QString> defaultvec (1,"n/a");
+void Build::addDetail(std::vector<QString> item)
 {
-    qDebug() << ("Creating build.");
-    for(int i = 0; i < 18; i++)
+  this->buildDetails.push_back(item);
+}
+
+QString Build::moreInfoDump()
+{
+    QString output;
+   for(auto i : this->buildDetails)
+   {
+       for(auto x : i)
+       {
+           output += (x + '\n');
+       }
+       output += '\n';
+   }
+   return output;
+}
+
+std::vector<QString> Build::getCPUInfo()
+{
+    for(auto i : this ->buildDetails)
     {
-        items[i] = specs [i];
+        if(i[0] == "cpu")
+        {
+            qDebug() << "cpu returned";
+            return i;
+        }
+        else continue;
     }
-}
+    return defaultvec;
+};
 
-/* Our getBuild() function creates a buildFormat string by itterating
- * through a list of 'titles' and merging this with the respective position
- * of the build's items returning a readable formatted list.
- */
-QString Build::getBuild()
+std::vector<QString> Build::getMBInfo()
 {
-    QString buildFormat = "";
-    QString titles[] = {"UID", "Category", "MSRP", "Name", "Platform", "Form Factor", "CPU", "Mother Board", "Cooler",
-                        "RAM", "Storage", "Power Supply", "GPU", "Case", "Extra 1", "Extra 2", "Extra 3", "Extra 4"};
-    buildFormat += "||++++++++++++++++++++++||\n";
-    for(int i = 0; i < 18; i++)
+    for(auto i : this ->buildDetails)
     {
-        buildFormat += (titles[i] + ": " + items[i] + "\n");
+        if(i[0] == "mb")
+        {
+            qDebug() << "mb returned";
+            return i;
+        }
+        else continue;
     }
-    buildFormat += "||++++++++++++++++++++++||\n";
-    return buildFormat;
-}
+    return defaultvec;
+};
 
-//||+++++++++++++GETTERS START HERE+++++++++++++||
-unsigned int Build::getUID()
+std::vector<QString> Build::getRAMInfo()
 {
-   return items[0].toUInt();
-}
+    for(auto i : this ->buildDetails)
+    {
+        if(i[0] == "ram")
+        {
+            qDebug() << "ram returned";
+            return i;
+        }
+        else continue;
+    }
+    return defaultvec;
+};
 
-QString Build::getCategory()
+std::vector<QString> Build::getGPUInfo()
 {
-    return items[1];
-}
+    for(auto i : this ->buildDetails)
+    {
+        if(i[0] == "gpu")
+        {
+            qDebug() << "gpu returned";
+            return i;
+        }
+        else continue;
+    }
+    return defaultvec;
+};
 
-QString Build::getMSRP()
+std::vector<QString> Build::getStorageInfo()
 {
-    return items[2];
-}
+    for(auto i : this ->buildDetails)
+    {
+        if(i[0] == "storage")
+        {
+            qDebug() << "storage returned";
+            return i;
+        }
+        else continue;
+    }
+    return defaultvec;
+};
 
-QString Build::getName()
+std::vector<QString> Build::getCaseInfo()
 {
-    return items[3];
-}
+    for(auto i : this ->buildDetails)
+    {
+        if(i[0] == "case")
+        {
+            qDebug() << "case returned";
+            return i;
+        }
+        else continue;
+    }
+    return defaultvec;
+};
 
-QString Build::getPlatform()
+std::vector<QString> Build::getPSUInfo()
 {
-    return items[4];
-}
+    for(auto i : this ->buildDetails)
+    {
+        if(i[0] == "psu")
+        {
+            qDebug() << "psu returned";
+            return i;
+        }
+        else continue;
+    }
+    return defaultvec;
+};
 
-QString Build::getFF()
-{
-    return items[5];
-}
+std::vector<QString> Build::getCoolerInfo()
 
-QString Build::getCPU()
 {
-    return items[6];
-}
-
-QString Build::getMB()
-{
-    return items[7];
-}
-
-QString Build::getCooler()
-{
-    return items[8];
-}
-
-QString Build::getRAM()
-{
-    return items[9];
-}
-
-QString Build::getSTRG()
-{
-    return items[10];
-}
-
-QString Build::getPSU()
-{
-    return items[11];
-}
-
-QString Build::getGPU()
-{
-    return items[12];
-}
-
-QString Build::getCase()
-{
-    return items[13];
-}
-
-QString Build::getEX1()
-{
-    return items[14];
-}
-
-QString Build::getEX2()
-{
-    return items[15];
-}
-QString Build::getEX3()
-{
-    return items[16];
-}
-QString Build::getEX4()
-{
-    return items[17];
-}
-//||+++++++++++++GETTERS END HERE+++++++++++++++||
+    for(auto i : this ->buildDetails)
+    {
+        if(i[0] == "cooler")
+        {
+            qDebug() << "cooler returned";
+            return i;
+        }
+        else continue;
+    }
+    return defaultvec;
+};
+//||--------Alexander Alvarez----------------||

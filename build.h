@@ -4,17 +4,25 @@
 #ifndef BUILD_H
 #define BUILD_H
 #include "mainwindow.h"
-#include "item.h"
+#include <vector>
 class Build
 {
-    public:
-        unsigned int getUID();
-        QString getCategory(), getMSRP(), getName(), getPlatform(), getFF(), getCPU(), getMB(),
-        getCooler(), getRAM(), getSTRG(), getPSU(), getGPU(), getCase(), getExtras(), getBuild(),
-        getEX1(), getEX2(), getEX3(), getEX4();
+    private:
+    std::vector<std::vector<QString>> buildDetails;
+    std::vector<std::vector<QString>> buildGeneral;
 
-        Build(QString specs[18]);
-        QString items[18];
+    public:
+        void addDetail(std::vector<QString> item);
+        void getBuild();
+        QString moreInfoDump();
+        std::vector<QString> getCPUInfo();
+        std::vector<QString> getMBInfo();
+        std::vector<QString> getRAMInfo();
+        std::vector<QString> getGPUInfo();
+        std::vector<QString> getStorageInfo();
+        std::vector<QString> getCaseInfo();
+        std::vector<QString> getPSUInfo();
+        std::vector<QString> getCoolerInfo();
 };
 #endif // BUILD_H
 //||--------Alexander Alvarez----------------||

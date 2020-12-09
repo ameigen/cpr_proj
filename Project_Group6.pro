@@ -11,7 +11,6 @@ CONFIG += c++11
 SOURCES += \
     build.cpp \
     dialog.cpp \
-    item.cpp \
     main.cpp \
     mainwindow.cpp \
     search.cpp
@@ -19,7 +18,6 @@ SOURCES += \
 HEADERS += \
     build.h \
     dialog.h \
-    item.h \
     mainwindow.h \
     search.h
 

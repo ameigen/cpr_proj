@@ -15,7 +15,6 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <array>
-#include "item.h"
 #include "build.h"
 
 QT_BEGIN_NAMESPACE
