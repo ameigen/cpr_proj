@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>834</width>
-    <height>477</height>
+    <width>731</width>
+    <height>498</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -396,8 +396,8 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>300</x>
       <y>0</y>
-      <width>1000</width>
-      <height>861</height>
+      <width>431</width>
+      <height>441</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -415,8 +415,8 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>988</width>
-       <height>849</height>
+       <width>419</width>
+       <height>429</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -425,10 +425,10 @@ p, li { white-space: pre-wrap; }
      <widget class="QTextBrowser" name="textBrowser">
       <property name="geometry">
        <rect>
-        <x>-1</x>
-        <y>-1</y>
-        <width>1000</width>
-        <height>861</height>
+        <x>0</x>
+        <y>0</y>
+        <width>421</width>
+        <height>431</height>
        </rect>
       </property>
       <property name="acceptDrops">
@@ -446,8 +446,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>834</width>
-     <height>36</height>
+     <width>731</width>
+     <height>37</height>
     </rect>
    </property>
    <property name="font">
