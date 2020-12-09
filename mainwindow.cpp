@@ -174,7 +174,7 @@ void MainWindow::getBuild(){
         Build tempBuild;
 
         if(query.exec()){ // Checks for error in query
-            QString categories[] = {"Manufacturer: ", "Model: ", "Price: ", "Segment: ", "Socket: ", "Graphics: ", "Chipset: ", "Cooler: ", "PCIE: ", "Max Memory: "};
+            QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Segment: ", "Socket: ", "Graphics: ", "Chipset: ", "Cooler: ", "PCIE: ", "Max Memory:  "};
             std::vector<QString> cpu;
             statusBar()->clearMessage();
             while(query.next()){    // Stores query results in global variables
@@ -189,7 +189,7 @@ void MainWindow::getBuild(){
                 pcieCPU = query.value(8).toString();
                 memMaxCPU = query.value(9).toString();
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU + " " + socketCPU);
-                cpu.push_back(QString("cpu"));
+                cpu.push_back(QString("CPU"));
                 for(int i = 0; i <= 9; ++i)
                 {
                    QString temp = categories[i] + query.value(i).toString();
@@ -216,7 +216,7 @@ void MainWindow::getBuild(){
         query.prepare(searchMB);
 
         if(query.exec()){
-            QString categories[] = {"Manufacturer: ", "Model: ", "Price: ", "Form Factor: ", "Chipset: ", "RAM Max Speed: ", "RAM Max Cap: ", "Socket: ", "m.2: "};
+            QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Form Factor: ", "Chipset: ", "RAM Max Speed: ", "RAM Max Cap: ", "Socket: ", "m.2: "};
             std::vector<QString> mb;
             while(query.next()){
                 manufacturerMB = query.value(0).toString();
@@ -231,7 +231,7 @@ void MainWindow::getBuild(){
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB);
                 statusBar()->showMessage("BUILD Status: searching for Motherboard...");
-                mb.push_back(QString("mb"));
+                mb.push_back(QString("Motherboard"));
                 for(int i = 0; i <= 8; ++i)
                 {
                     QString temp = categories[i] + query.value(i).toString();
@@ -259,7 +259,7 @@ void MainWindow::getBuild(){
         query.prepare(searchRAM);
 
         if(query.exec()){
-            QString categories[] = {"Manufacturer: ", "Model: ", "Type: ", "Size: ", "Chipset: ", "Price: ", "Speed: ", "Clock: "};
+            QString categories[] = {"Manufacturer: ", "Model: ", "Type: ", "Size: ", "Chipset: ", "Price: $", "Speed: ", "Clock: "};
             std::vector<QString> ram;
             while(query.next()){
                 manufacturerRAM = query.value(0).toString();
@@ -274,7 +274,7 @@ void MainWindow::getBuild(){
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM);
                 statusBar()->showMessage("BUILD Status: searching for RAM...");
-                ram.push_back(QString("ram"));
+                ram.push_back(QString("RAM"));
                 for(int i = 0; i <= 6; ++i)
                 {
                     QString temp = categories[i] + query.value(i).toString();
@@ -310,7 +310,7 @@ void MainWindow::getBuild(){
         query.prepare(searchGPU);
 
         if(query.exec()){
-            QString categories[] = {"Manufacturer: ", "Series: ", "Model: ", "Price: ", "Memory Size: "};
+            QString categories[] = {"Manufacturer: ", "Series: ", "Model: ", "Price: $", "Memory Size: "};
             std::vector<QString> gpu;
             while(query.next()){
                 manufacturerGPU = query.value(0).toString();
@@ -324,7 +324,7 @@ void MainWindow::getBuild(){
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
                                          + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU);
                 statusBar()->showMessage("BUILD Status: searching for GPU...");
-                gpu.push_back(QString("gpu"));
+                gpu.push_back(QString("GPU"));
                 for(int i = 0; i <= 4; ++i)
                 {
                     QString temp = categories[i] + query.value(i).toString();
@@ -351,7 +351,7 @@ void MainWindow::getBuild(){
         query.prepare(searchSTG);
 
         if(query.exec()){
-            QString categories[] = {"Manufacturer: ", "Model: ", "Price: ", "Type: ", "Form Factor: ", "Size: ", "NVME: ", "Gen 4: "};
+            QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Type: ", "Form Factor: ", "Size: ", "NVME: ", "Gen 4: "};
             std::vector<QString> storage;
             while(query.next()){
                 manufacturerSTG = query.value(0).toString();
@@ -369,7 +369,7 @@ void MainWindow::getBuild(){
                                          + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
                                          + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG);
                 statusBar()->showMessage("BUILD Status: searching for Storage...");
-                storage.push_back(QString("storage"));
+                storage.push_back(QString("Storage (SSD/HDD)"));
                 for(int i = 0; i <= 7; ++i)
                 {
                     QString temp = categories[i] + query.value(i).toString();
@@ -406,7 +406,7 @@ void MainWindow::getBuild(){
         query.prepare(searchCASE);
 
         if(query.exec()){
-            QString categories[] = {"Manufacturer: ", "Model: ", "Price: ", "Size: ", "Max Board: ", "Max Board Number: ", "Cooler Size: ", "Max Radiator: "};
+            QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Size: ", "Max Board: ", "Max Board Number: ", "Cooler Size: ", "Max Radiator: "};
             std::vector<QString> pcase;
             statusBar()->clearMessage();
             while(query.next()){
@@ -426,7 +426,7 @@ void MainWindow::getBuild(){
                                          + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
                                          + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE);
                 statusBar()->showMessage("BUILD Status: searching for Case...");
-                pcase.push_back(QString("pcase"));
+                pcase.push_back(QString("PC Case"));
                 for(int i = 0; i <= 7; ++i)
                 {
                     QString temp = categories[i] + query.value(i).toString();
@@ -452,7 +452,7 @@ void MainWindow::getBuild(){
         query.prepare(searchPSU);
 
         if(query.exec()){
-            QString categories[] = {"Manufacturer: ", "Model: ", "Price: ", "Wattage: ", "Certified: "};
+            QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Wattage: ", "Certified: "};
             std::vector<QString> psu;
             statusBar()->clearMessage();
             while(query.next()){
@@ -470,7 +470,7 @@ void MainWindow::getBuild(){
                                          + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
                                          + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU);
                 statusBar()->showMessage("BUILD Status: searching for PSU...");
-                psu.push_back(QString("psu"));
+                psu.push_back(QString("Power Supply Unit"));
                 for(int i = 0; i <= 4; ++i)
                 {
                     QString temp = categories[i] + query.value(i).toString();
@@ -514,7 +514,7 @@ void MainWindow::getBuild(){
             query.prepare(coolerSearch);
 
             if(query.exec()){
-                QString categories[] = {"Manufacturer: ", "Model: ", "Intel Compatible: ", "AMD Compatible: ", "Price: "};
+                QString categories[] = {"Manufacturer: ", "Model: ", "Intel Compatible: ", "AMD Compatible: ", "Price: $"};
                 std::vector<QString> cooler;
                 statusBar()->clearMessage();
                 while(query.next()){
@@ -537,7 +537,7 @@ void MainWindow::getBuild(){
                                              + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
                                              + "\n\n Total Build Cost: $" + buildTotal);
                     statusBar()->showMessage("BUILD Status: Build Complete...CPU Cooler added...");
-                    cooler.push_back(QString("cooler"));
+                    cooler.push_back(QString("Cooler"));
                     for(int i = 0; i <= 4; ++i)
                     {
                         QString temp = categories[i] + query.value(i).toString();
