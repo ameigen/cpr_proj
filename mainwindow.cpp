@@ -37,14 +37,23 @@ void MainWindow::saveToFile() // Basic function for writing to a file.
 
     QFile file(saveFile);
 
-    if (file.open(QIODevice::ReadWrite)) // If the file is open, begin read/write.
+    if (file.open(QIODevice::WriteOnly)) // If the file is open, begin read/write.
     {
         QTextStream stream(&file); // "Stream" = Write to the file, stream << is like cin.
-        stream << "Is this a new test?"; // Test Text
+        stream << "Search Results\n CPU: " + manufacturerCPU + " " + modelCPU + " $" + priceCPU
+                  + "\n COOLER: " + manufacturerCL + " " + modelCL + " $" + priceCL
+                  + "\n MB: " + manufacturerMB + " " + modelMB + " " + chipsetMB + " $" + priceMB
+                  + "\n RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + " $" + priceRAM
+                  + "\n GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB $" + priceGPU
+                  + "\n SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB $" + priceSTG
+                  + "\n CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + " $" + priceCASE
+                  + "\n PSU: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + " $" + pricePSU
+                  + "\n\n Total Build cost: $" + buildTotal;
+        statusBar()->showMessage("File Saved"); // displays a "file saved" notification in the status bar below the UI
     }
 }
 
-/* saveToFile function authored by Lyndsey. A majority of the graphical section (mainwindow.ui)
+/* saveToFile function authored by Lyndsey, but fully developed and completed by Jonathan. A majority of the graphical section (mainwindow.ui)
  * was designed by Lyndsey, as well. */
 
 void MainWindow::loadFromFile()
@@ -61,6 +70,8 @@ void MainWindow::loadFromFile()
     QTextStream in(&file);
 
     ui->textBrowser->setText(in.readAll()); // displays the opened file in the UI text browser (right side)
+
+    statusBar()->showMessage("File Loaded"); // displays a "file saved" notification in the status bar below the UI
 }
 
 /* loadFromFile function authored by Jonathan, and
