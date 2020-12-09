@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>798</width>
-    <height>438</height>
+    <width>834</width>
+    <height>477</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -455,7 +461,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>798</width>
+     <width>834</width>
      <height>28</height>
     </rect>
    </property>
@@ -502,9 +508,9 @@ p, li { white-space: pre-wrap; }
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
+          <red>0</red>
+          <green>150</green>
+          <blue>200</blue>
          </color>
         </brush>
        </colorrole>
@@ -531,9 +537,9 @@ p, li { white-space: pre-wrap; }
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
+          <red>0</red>
+          <green>150</green>
+          <blue>200</blue>
          </color>
         </brush>
        </colorrole>
@@ -551,18 +557,18 @@ p, li { white-space: pre-wrap; }
        <colorrole role="Base">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
+          <red>0</red>
+          <green>150</green>
+          <blue>200</blue>
          </color>
         </brush>
        </colorrole>
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>255</red>
-          <green>255</green>
-          <blue>255</blue>
+          <red>0</red>
+          <green>150</green>
+          <blue>200</blue>
          </color>
         </brush>
        </colorrole>
