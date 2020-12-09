@@ -190,8 +190,8 @@ void MainWindow::getBuild(){
                 memMaxCPU = query.value(9).toString();
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU + " " + socketCPU);
                 cpu.push_back(QString("CPU"));
-                for(int i = 0; i <= 9; ++i)
-                {
+                cpu.push_back(QString("cpu"));
+                for(int i = 0; i <= 9; ++i){
                    QString temp = categories[i] + query.value(i).toString();
                    cpu.push_back(temp);
                 }
@@ -228,16 +228,11 @@ void MainWindow::getBuild(){
                 ramMaxCapacityMB = query.value(6).toString();
                 socketMB = query.value(7).toString();
                 m2MB = query.value(8).toString();
-                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB);
-                statusBar()->showMessage("BUILD Status: searching for Motherboard...");
-                mb.push_back(QString("Motherboard"));
-                for(int i = 0; i <= 8; ++i)
-                {
+                mb.push_back(QString("mb"));
+                for(int i = 0; i <= 8; ++i){
                     QString temp = categories[i] + query.value(i).toString();
                     mb.push_back(temp);
                 }
-
             }
             if(manufacturerMB.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for Motherboard within budget");
@@ -269,18 +264,12 @@ void MainWindow::getBuild(){
                 priceRAM = query.value(4).toString();
                 speedRAM = query.value(5).toString();
                 clRAM = query.value(6).toString();
-
-                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
-                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM);
-                statusBar()->showMessage("BUILD Status: searching for RAM...");
-                ram.push_back(QString("RAM"));
-                for(int i = 0; i <= 6; ++i)
-                {
+                ram.push_back(QString("ram"));
+                for(int i = 0; i <= 6; ++i){
                     QString temp = categories[i] + query.value(i).toString();
                     ram.push_back(temp);;
                  }
-                }
+            }
             if(manufacturerRAM.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for Memory within budget");
             }
@@ -294,18 +283,10 @@ void MainWindow::getBuild(){
         int maxGPU = (budget.toInt()*43)/100;
         QString gpuBudget = QString::number(maxGPU);
         QString gpuCat;
-            if(category == "productivity"){
-                gpuCat = "Workstation";
-            }else if(category == "gaming" && maxGPU > 229){
-                gpuCat = "%e%";
-            }else if(category == "gaming" && maxGPU <= 229){
-                gpuCat = "Entry";
-            }
         QString searchGPU = "SELECT manufacturer, series, model, price, memSize \
                              FROM gpu \
                              WHERE manufacturer LIKE '" + graphics + "' \
                              AND price BETWEEN 0 AND " + gpuBudget + "  \
-                             AND category LIKE '" + gpuCat + "' \
                              ORDER BY price DESC LIMIT 1";
         query.prepare(searchGPU);
 
@@ -318,19 +299,12 @@ void MainWindow::getBuild(){
                 modelGPU = query.value(2).toString();
                 priceGPU = query.value(3).toString();
                 memSizeGPU = query.value(4).toString();
-
-                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
-                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
-                                         + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU);
-                statusBar()->showMessage("BUILD Status: searching for GPU...");
-                gpu.push_back(QString("GPU"));
-                for(int i = 0; i <= 4; ++i)
-                {
+                gpu.push_back(QString("gpu"));
+                for(int i = 0; i <= 4; ++i){
                     QString temp = categories[i] + query.value(i).toString();
                     gpu.push_back(temp);;
                 }
-                }
+            }
             if(manufacturerGPU.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for GPU within budget");
             }
@@ -362,20 +336,12 @@ void MainWindow::getBuild(){
                 sizeSTG = query.value(5).toString();
                 isnvmeSTG = query.value(6).toString();
                 gen4STG = query.value(7).toString();
-
-                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
-                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
-                                         + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
-                                         + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG);
-                statusBar()->showMessage("BUILD Status: searching for Storage...");
-                storage.push_back(QString("Storage (SSD/HDD)"));
-                for(int i = 0; i <= 7; ++i)
-                {
+                storage.push_back(QString("storage"));
+                for(int i = 0; i <= 7; ++i){
                     QString temp = categories[i] + query.value(i).toString();
                     storage.push_back(temp);;
                 }
-                }
+            }
             if(manufacturerSTG.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for SSD within budget");
             }
@@ -418,13 +384,6 @@ void MainWindow::getBuild(){
                 maxBoardNumCASE = query.value(5).toString();
                 coolerSizeCASE = query.value(6).toString();
                 maxRadCASE = query.value(7).toString();
-
-                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
-                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
-                                         + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
-                                         + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
-                                         + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE);
                 statusBar()->showMessage("BUILD Status: searching for Case...");
                 pcase.push_back(QString("PC Case"));
                 for(int i = 0; i <= 7; ++i)
@@ -461,18 +420,8 @@ void MainWindow::getBuild(){
                 pricePSU = query.value(2).toString();
                 wattagePSU = query.value(3).toString();
                 certifiedPSU = query.value(4).toString();
-
-                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
-                                         + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
-                                         + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
-                                         + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
-                                         + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
-                                         + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU);
-                statusBar()->showMessage("BUILD Status: searching for PSU...");
-                psu.push_back(QString("Power Supply Unit"));
-                for(int i = 0; i <= 4; ++i)
-                {
+                psu.push_back(QString("psu"));
+                for(int i = 0; i <= 4; ++i){
                     QString temp = categories[i] + query.value(i).toString();
                     psu.push_back(temp);
                 }
@@ -496,7 +445,8 @@ void MainWindow::getBuild(){
                                  + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
                                  + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
                                  + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
-                                 + "\n\n Total Build Cost: $" + buildTotal);
+                                 + "\n\n Total Build Cost: $" + buildTotal
+                                 + "\n\n Build Budget: $" + budget);
         statusBar()->showMessage("BUILD Status: Build Complete"); // Final results are printed on the screen and status bar is updated
 
         /**** END OF PASS ONE :: PARTS FINDER ****/
@@ -535,11 +485,11 @@ void MainWindow::getBuild(){
                                              + "\n\n- SSD: " + manufacturerSTG + " " + modelSTG + " " + sizeSTG + "GB\n  Price $" + priceSTG
                                              + "\n\n- CASE: " + manufacturerCASE + " " + modelCASE + " " + sizeCASE + "\n  Price $" + priceCASE
                                              + "\n\n- POWER SUPPLY UNIT: " + manufacturerPSU + " " + modelPSU + " " + wattagePSU + "W 80+ " + certifiedPSU.toCaseFolded() + "\n  Price $" + pricePSU
-                                             + "\n\n Total Build Cost: $" + buildTotal);
+                                             + "\n\n Total Build Cost: $" + buildTotal
+                                             + "\n\n Build Budget: $" + budget);
                     statusBar()->showMessage("BUILD Status: Build Complete...CPU Cooler added...");
                     cooler.push_back(QString("Cooler"));
-                    for(int i = 0; i <= 4; ++i)
-                    {
+                    for(int i = 0; i <= 4; ++i){
                         QString temp = categories[i] + query.value(i).toString();
                         cooler.push_back(temp);
                     }
@@ -553,10 +503,7 @@ void MainWindow::getBuild(){
                 statusBar()->showMessage("BUILD Status: Query Failed for CPU Cooler");
             }
         }
-            if(infoDump)
-            {
-                ui->textBrowser->setText(tempBuild.moreInfoDump());
-            }
+
         /**** END OF PASS TWO :: PARTS FINDER ****/
     }//CLOSE DB OPEN CHECKER
 }//CLOSE getBuild
