@@ -32,7 +32,7 @@
       <x>0</x>
       <y>0</y>
       <width>300</width>
-      <height>600</height>
+      <height>1200</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -40,6 +40,12 @@
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>300</width>
+      <height>1200</height>
+     </size>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(0, 150, 200);
@@ -54,7 +60,7 @@
        <x>0</x>
        <y>0</y>
        <width>298</width>
-       <height>598</height>
+       <height>1198</height>
       </rect>
      </property>
      <widget class="QPushButton" name="templateBut">
@@ -417,8 +423,8 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>300</x>
       <y>0</y>
-      <width>834</width>
-      <height>420</height>
+      <width>1000</width>
+      <height>861</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -436,8 +442,8 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>822</width>
-       <height>408</height>
+       <width>988</width>
+       <height>849</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -448,8 +454,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>-1</x>
         <y>-1</y>
-        <width>834</width>
-        <height>420</height>
+        <width>1000</width>
+        <height>861</height>
        </rect>
       </property>
       <property name="acceptDrops">
