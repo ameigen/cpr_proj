@@ -9,6 +9,7 @@
  * Font size
  * Color scheme
  * Positioning of objects
+ * + dialog.ui
  */
 #ifndef DIALOG_H
 #define DIALOG_H

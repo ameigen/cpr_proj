@@ -3,6 +3,7 @@
  * Font size
  * Color scheme
  * Positioning of objects
+ * + mainwindow.ui
  */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
