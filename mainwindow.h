@@ -1,3 +1,9 @@
+/*
+ * Mainwindow visuals authored by Eliazar M.
+ * Font size
+ * Color scheme
+ * Positioning of objects
+ */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

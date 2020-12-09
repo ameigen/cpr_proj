@@ -4,6 +4,12 @@
  * + search.cpp
  * + search.ui
  */
+/*
+ * Search visuals authored by Eliazar M.
+ * Font size
+ * Color scheme
+ * Positioning of objects
+ */
 #ifndef SEARCH_H
 #define SEARCH_H
 
@@ -33,6 +39,8 @@ private slots:
     void on_comboBox_activated(const QString &arg1);
 
     void on_comboBox_2_activated(const QString &arg1);
+
+    void on_comboBox_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::search *ui;

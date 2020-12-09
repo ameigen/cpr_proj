@@ -4,6 +4,12 @@
  * + dialog.cpp
  * + dialog.ui
  */
+/*
+ * Mainwindow visuals authored by Eliazar M.
+ * Font size
+ * Color scheme
+ * Positioning of objects
+ */
 #ifndef DIALOG_H
 #define DIALOG_H
 
