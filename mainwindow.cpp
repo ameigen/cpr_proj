@@ -299,8 +299,7 @@ void MainWindow::getBuild(){
                 coolerCPU = query.value(7).toString();
                 pcieCPU = query.value(8).toString();
                 memMaxCPU = query.value(9).toString();
-                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU + " " + socketCPU
-                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL);
+                ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU + " " + socketCPU);
                 statusBar()->showMessage("BUILD Status: searching for CPU...");
 
             }
@@ -327,7 +326,6 @@ void MainWindow::getBuild(){
                 socketMB = query.value(7).toString();
                 m2MB = query.value(8).toString();
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB);
                 statusBar()->showMessage("BUILD Status: searching for Motherboard...");
 
@@ -354,7 +352,6 @@ void MainWindow::getBuild(){
                 clRAM = query.value(6).toString();
 
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM);
                 statusBar()->showMessage("BUILD Status: searching for RAM...");
@@ -389,7 +386,6 @@ void MainWindow::getBuild(){
                 memSizeGPU = query.value(4).toString();
 
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
                                          + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU);
@@ -420,7 +416,6 @@ void MainWindow::getBuild(){
                 gen4STG = query.value(7).toString();
 
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
                                          + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
@@ -462,7 +457,6 @@ void MainWindow::getBuild(){
                 maxRadCASE = query.value(7).toString();
 
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
                                          + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
@@ -490,7 +484,6 @@ void MainWindow::getBuild(){
                 certifiedPSU = query.value(4).toString();
 
                 ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                         + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
                                          + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                          + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
                                          + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
@@ -504,7 +497,6 @@ void MainWindow::getBuild(){
         total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt() + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt();
         buildTotal = QString::number(total);
         ui->textBrowser->setText("Search Results\n\n- CPU: " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
-                                 + "\n\n- COOLER: " + manufacturerCL + " " + modelCL + " N/A" + priceCL
                                  + "\n\n- MOTHERBOARD: " + manufacturerMB + " " + modelMB + " " + chipsetMB + "\n  Price $" + priceMB
                                  + "\n\n- RAM: " + manufacturerRAM + " " + modelRAM + " " + typeRAM + " " + sizeRAM + "GB " + speedRAM + "Mhz CL" + clRAM + "\n  Price $" + priceRAM
                                  + "\n\n- GPU: " + manufacturerGPU + " " + seriesGPU + " " + modelGPU + " " + memSizeGPU + "GB\n  Price $" + priceGPU
