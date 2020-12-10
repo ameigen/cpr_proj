@@ -156,8 +156,11 @@ QString MainWindow::getAll(){
  *  find matching parts and compose a complete build.
  */
 void MainWindow::getBuild(){
+
     ui->textBrowser->clear();
+
     if(db.open()){
+
         QSqlQuery query(QSqlDatabase::database("aws"));
         query.exec("use CPR");
 
@@ -178,7 +181,7 @@ void MainWindow::getBuild(){
             QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Segment: ", "Socket: ", "Graphics: ", "Chipset: ", "Cooler: ", "PCIE: ", "Max Memory:  "};
             std::vector<QString> cpu;
             statusBar()->clearMessage();
-            while(query.next()){    // Stores query results in global variables
+            query.next();    // Stores query results in global variables
                 manufacturerCPU = query.value(0).toString();
                 modelCPU = query.value(1).toString();
                 priceCPU = query.value(2).toString();
@@ -196,7 +199,6 @@ void MainWindow::getBuild(){
                    QString temp = categories[i] + query.value(i).toString();
                    cpu.push_back(temp);
                 }
-            }
             if(manufacturerCPU.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for CPU within budget");
             }
@@ -219,7 +221,7 @@ void MainWindow::getBuild(){
         if(query.exec()){
             QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Form Factor: ", "Chipset: ", "RAM Max Speed: ", "RAM Max Cap: ", "Socket: ", "m.2: "};
             std::vector<QString> mb;
-            while(query.next()){
+            query.next();
                 manufacturerMB = query.value(0).toString();
                 modelMB = query.value(1).toString();
                 priceMB = query.value(2).toString();
@@ -234,7 +236,6 @@ void MainWindow::getBuild(){
                     QString temp = categories[i] + query.value(i).toString();
                     mb.push_back(temp);
                 }
-            }
             if(manufacturerMB.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for Motherboard within budget");
             }
@@ -257,7 +258,7 @@ void MainWindow::getBuild(){
         if(query.exec()){
             QString categories[] = {"Manufacturer: ", "Model: ", "Type: ", "Size: ", "Chipset: ", "Price: $", "Speed: ", "Clock: "};
             std::vector<QString> ram;
-            while(query.next()){
+            query.next();
                 manufacturerRAM = query.value(0).toString();
                 modelRAM = query.value(1).toString();
                 typeRAM = query.value(2).toString();
@@ -270,7 +271,6 @@ void MainWindow::getBuild(){
                     QString temp = categories[i] + query.value(i).toString();
                     ram.push_back(temp);;
                  }
-            }
             if(manufacturerRAM.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for Memory within budget");
             }
@@ -294,7 +294,7 @@ void MainWindow::getBuild(){
         if(query.exec()){
             QString categories[] = {"Manufacturer: ", "Series: ", "Model: ", "Price: $", "Memory Size: "};
             std::vector<QString> gpu;
-            while(query.next()){
+            query.next();
                 manufacturerGPU = query.value(0).toString();
                 seriesGPU = query.value(1).toString();
                 modelGPU = query.value(2).toString();
@@ -305,7 +305,6 @@ void MainWindow::getBuild(){
                     QString temp = categories[i] + query.value(i).toString();
                     gpu.push_back(temp);;
                 }
-            }
             if(manufacturerGPU.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for GPU within budget");
             }
@@ -328,7 +327,7 @@ void MainWindow::getBuild(){
         if(query.exec()){
             QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Type: ", "Form Factor: ", "Size: ", "NVME: ", "Gen 4: "};
             std::vector<QString> storage;
-            while(query.next()){
+            query.next();
                 manufacturerSTG = query.value(0).toString();
                 modelSTG = query.value(1).toString();
                 priceSTG = query.value(2).toString();
@@ -342,7 +341,6 @@ void MainWindow::getBuild(){
                     QString temp = categories[i] + query.value(i).toString();
                     storage.push_back(temp);;
                 }
-            }
             if(manufacturerSTG.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for SSD within budget");
             }
@@ -376,7 +374,7 @@ void MainWindow::getBuild(){
             QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Size: ", "Max Board: ", "Max Board Number: ", "Cooler Size: ", "Max Radiator: "};
             std::vector<QString> pcase;
             statusBar()->clearMessage();
-            while(query.next()){
+            query.next();
                 manufacturerCASE = query.value(0).toString();
                 modelCASE = query.value(1).toString();
                 priceCASE = query.value(2).toString();
@@ -391,7 +389,6 @@ void MainWindow::getBuild(){
                 {
                     QString temp = categories[i] + query.value(i).toString();
                     pcase.push_back(temp);;
-                }
                 }
             if(manufacturerCASE.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for Computer Case within budget");
@@ -415,7 +412,7 @@ void MainWindow::getBuild(){
             QString categories[] = {"Manufacturer: ", "Model: ", "Price: $", "Wattage: ", "Certified: "};
             std::vector<QString> psu;
             statusBar()->clearMessage();
-            while(query.next()){
+            query.next();
                 manufacturerPSU = query.value(0).toString();
                 modelPSU = query.value(1).toString();
                 pricePSU = query.value(2).toString();
@@ -425,7 +422,6 @@ void MainWindow::getBuild(){
                 for(int i = 0; i <= 4; ++i){
                     QString temp = categories[i] + query.value(i).toString();
                     psu.push_back(temp);
-                }
                 }
             if(manufacturerPSU.isNull()){
                 QMessageBox::information(this, "Error!", "No item found for Power Supply within budget");
@@ -452,7 +448,7 @@ void MainWindow::getBuild(){
 
         /**** END OF PASS ONE :: PARTS FINDER ****/
 
-        /**** START OF PASS TWO :: PARTS FINDER ****/
+        /**** START OF PASS TWO :: COOLER FINDER ****/
         /* Step 8 - Query for CPU Cooler */
         if(coolerCPU == "no"){  // Checks if there is a missing cooler and fills that  part.
             int budgetLeft = budget.toInt() - total;
@@ -468,7 +464,7 @@ void MainWindow::getBuild(){
                 QString categories[] = {"Manufacturer: ", "Model: ", "Intel Compatible: ", "AMD Compatible: ", "Price: $"};
                 std::vector<QString> cooler;
                 statusBar()->clearMessage();
-                while(query.next()){
+                query.next();
                     manufacturerCL = query.value(0).toString();
                     modelCL = query.value(1).toString();
                     intelCL = query.value(2).toString();
@@ -477,7 +473,7 @@ void MainWindow::getBuild(){
 
                     total = priceCPU.toInt() + priceMB.toInt() + priceCASE.toInt() + priceGPU.toInt() + pricePSU.toInt() + priceSTG.toInt() + priceRAM.toInt() + priceCL.toInt();
                     buildTotal = QString::number(total);
-
+                    tempBuild.addDetail(cooler);
                     ui->textBrowser->setText("Search Results\n\n  Build Budget: $" + budget
                                              + "\n\n- CPU: \n  " + manufacturerCPU + " " + modelCPU + "\n  Price $" + priceCPU
                                              + "\n\n- COOLER: \n  " + manufacturerCL + " " + modelCL + "\n  Price $" + priceCL
@@ -494,20 +490,21 @@ void MainWindow::getBuild(){
                         QString temp = categories[i] + query.value(i).toString();
                         cooler.push_back(temp);
                     }
-                    }
-                if(manufacturerCL.isNull()){
-                    QMessageBox::information(this, "Error!", "No item found for CPU Cooler within budget");
-                }
-                tempBuild.addDetail(cooler);
-            }else{
-                QMessageBox::information(this, "Error", "Query Failed::CL");
-                statusBar()->showMessage("BUILD Status: Query Failed for CPU Cooler");
-            }
-        }
+                    if(manufacturerCL.isNull()){
+                        QMessageBox::information(this, "Error!", "No item found for CPU Cooler within budget");
+                    }else{
+                        QMessageBox::information(this, "Error", "Query Failed::CL");
+                        statusBar()->showMessage("BUILD Status: Query Failed for CPU Cooler");
+                     }
 
-        /**** END OF PASS TWO :: PARTS FINDER ****/
+            } // CLOSE queryExec for Cooler
+
+        }/**** END OF PASS TWO :: COOLER FINDER ****/
+
     }//CLOSE DB OPEN CHECKER
+
 }//CLOSE getBuild
+
 /* ||==================|| Database Functions END ||==================|| */
 
 /* ||==================|| Trigger Functions START ||==================|| */
